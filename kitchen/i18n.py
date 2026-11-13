@@ -190,10 +190,16 @@ def placeholders(text):
     return sorted(m.group(0) for m in PLACEHOLDER.finditer(text))
 
 
+def plain(text):
+    return (text.replace("\u2014", "-").replace("\u2013", "-").replace("\u2026", "...").replace("\u2192", ">")
+            .replace("\u200b", ""))
+
+
 def pull(lang, accepted_path):
     """Accepted suggestions from the site into i18n/LANG.csv; Russian lives in the Java sources, so it is only listed."""
     strings, _ = scan()
-    accepted = read_csv(accepted_path, lang)
+    # The site keeps what translators typed; public texts use plain typography (no long dashes, ellipsis or arrows).
+    accepted = {plain(en): plain(text) for en, text in read_csv(accepted_path, lang).items()}
     if lang == "ru":
         for en, text in accepted.items():
             if en in strings and text and text != strings[en]["ru"]:

@@ -649,6 +649,7 @@ public final class UiHider {
             PlayerHook.onTheatre(!theatres.isEmpty());
             for (View theatre : theatres) {
                 PlayerGestures.wrapDragArea(theatre);
+                ChatOff.apply(theatre);
             }
             navUnderKeyboard(activity, decor, theatres);
         }

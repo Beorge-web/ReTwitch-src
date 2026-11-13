@@ -189,7 +189,8 @@ public final class SettingsHook {
                 new SettingsScreen.Link(t("Сайт", "Website"),
                         new android.graphics.drawable.BitmapDrawable(c.getResources(), SettingsLogos.rte()), 0, false,
                         () -> openLink(c, LINK_SITE)),
-                new SettingsScreen.Link("GitHub", tinted(c, "ic_github"), 0xFF6B6B76, false,
+                // GitHub's own dark: the grey 6B6B76 is what the screen gives a link that isn't there yet
+                new SettingsScreen.Link("GitHub", tinted(c, "ic_github"), 0xFF24292F, false,
                         () -> openLink(c, LINK_GITHUB)),
         });
         s.section(t("Просмотр", "Watching"));
@@ -507,6 +508,7 @@ public final class SettingsHook {
     }
 
     private static void chatPage(SettingsScreen s) {
+        s.toggle(Toggles.CHAT_OFF);
         s.nav(t("Внешний вид", "Look"), t("Размер текста, время, чередование", "Text size, time, alternating rows"),
                 SettingsHook::chatLookPage);
         s.nav(t("Значки и ники", "Badges and nicks"), t("Значки других клиентов, раскраски", "Other clients' badges, paints"),

@@ -725,7 +725,7 @@ public final class ReloadHook {
     /**
      * Bit set of the strip's buttons: 1 = reload (live), 2 = audio compressor, 4 = chapters (VOD),
      * 8 = ambilight, 16 = player stats, 32 = chat offset (VOD), 64 = mirror, 128 = download (VOD/clip),
-     * 256 = record (live).
+     * 256 = record (live), 512 = chat on and off ({@link ChatOff}).
      */
     private static int enabledButtons(boolean vod) {
         return (!vod && RefreshSettings.isButtonEnabled() ? 1 : 0)
@@ -736,7 +736,8 @@ public final class ReloadHook {
                 | (vod && Toggles.on(Toggles.VOD_CHAT_SYNC) ? 32 : 0)
                 | (Toggles.on(Toggles.MIRROR_BUTTON) ? 64 : 0)
                 | (vod && Toggles.on(Toggles.DOWNLOAD_BUTTON) ? 128 : 0)
-                | (!vod && Toggles.on(Toggles.LIVE_RECORD) ? 256 : 0);
+                | (!vod && Toggles.on(Toggles.LIVE_RECORD) ? 256 : 0)
+                | (Toggles.on(Toggles.CHAT_OFF) ? 512 : 0);
     }
 
     /** {@link #enabledButtons} of the current layout pass, for {@link #createButton}. */
@@ -862,6 +863,9 @@ public final class ReloadHook {
         }
         if ((buttons & 256) != 0) {
             strip.addView(RecordSheet.createButton(context));
+        }
+        if ((buttons & 512) != 0) {
+            strip.addView(ChatOff.createButton(context));
         }
         if ((buttons & 2) != 0) {
             strip.addView(AudioCompressor.createButton(context));

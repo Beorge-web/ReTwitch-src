@@ -8,6 +8,8 @@ the original Twitch bundle. The Twitch app itself is not here: bring your own.
 
 [Русский - ниже](#русский)
 
+![What the mod does](docs/features.png)
+
 ## What you need
 
 - Linux or macOS, Python 3.10+, JDK 17+ (`java`, `javac`, `jar`, `keytool`)

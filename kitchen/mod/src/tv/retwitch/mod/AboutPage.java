@@ -73,6 +73,7 @@ final class AboutPage {
         s.section(t("Спасибо", "Thanks"));
         s.action("ReYohoho", t("Сообщество и тестеры", "The community and testers"), () -> SettingsHook.openLink(c, SettingsHook.LINK_SITE));
         s.action("@FredMan95", t("Перевод на испанский", "Spanish translation"), null);
+        s.action("@GoatKou", t("Перевод на французский", "French translation"), null);
         s.action("Claude AI", t("Помогает писать код", "Helps writing the code"), null);
         s.section(t("Лицензия", "License"));
         s.hint(t("© 2026 ReYohoho и участники проекта. ReTwitch - свободная программа: её можно распространять и изменять "

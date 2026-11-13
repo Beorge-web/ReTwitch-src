@@ -964,6 +964,18 @@ public final class Toggles {
             .about("Строки через одну темнее",
                     "Every other row is darker")
             .look(SettingsPreview.CHAT, SettingsPreview.C_ALT).asNew("0.4.18-alpha");
+    public static final Toggle CHAT_OFF = new Toggle("chat_off", "Чат выключен", "Chat off", false)
+            .about("Для слабых телефонов: чат не рисуется, пока не попросите",
+                    "For slow phones: the chat isn't drawn until you ask for it")
+            .compare("Чат под плеером и сбоку в полном экране, со смайлами",
+                    "На месте чата «Чат выключен · Показать», в полном экране видео на всю ширину",
+                    "The chat under the player and beside it in full screen, with emotes",
+                    "\"Chat is off · Show\" in the chat's place, the video takes the full width in full screen")
+            .note("Включить чат до перезапуска приложения: «Показать» на его месте или кнопка чата на плеере. Чат при этом "
+                            + "подключён: баллы, упоминания и мод-логи работают. Не действует в вертикальном виде",
+                    "To turn the chat on until the app restarts: Show in its place or the chat button on the player. The chat "
+                            + "stays connected: points, mentions and mod logs work. Vertical view isn't covered")
+            .asNew("0.5.28-beta");
     public static final Toggle CHAT_PINCH_TEXT = new Toggle("chat_pinch_text", "Размер щипком", "Pinch to resize", false)
             .about("Двумя пальцами прямо в чате, как фото",
                     "With two fingers right in the chat, like a photo")

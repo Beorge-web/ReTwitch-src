@@ -219,6 +219,9 @@ public final class TheatreDividerHook {
             if (overVideo()) {
                 return 1f; // the video and every player overlay take the full width, syncOverVideo places the chat
             }
+            if (original > 0f && original < 1f && landscape() && ChatOff.hidden()) {
+                return 1f; // chat off: no column, as in Twitch's No chat mode
+            }
             int percent = widthPercent();
             if (percent < 0 || original <= 0f || original >= 1f) {
                 return original;
@@ -253,7 +256,7 @@ public final class TheatreDividerHook {
 
     /** The side chat lies over a full-width video now ({@link Toggles#CHAT_OVER_VIDEO}). */
     private static boolean overVideo() {
-        return columnMode && !pbypShown && landscape() && Toggles.on(Toggles.CHAT_OVER_VIDEO);
+        return columnMode && !pbypShown && landscape() && Toggles.on(Toggles.CHAT_OVER_VIDEO) && !ChatOff.hidden();
     }
 
     /** Width % of the chat column over the video: typing's, else the divider's (Twitch's 30 by default). */
