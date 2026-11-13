@@ -29,9 +29,9 @@ import java.util.Map;
  * buttons, extensions, leaderboards, the mature content label (and answers its
  * warning), bottom navigation items and -- in landscape -- the side chat's
  * header and input and the One Chat input.
- * Runs on every global layout of Twitch's activities, so a view Twitch
- * re-shows is hidden again on the next pass. Only views that are VISIBLE are
- * touched; the landscape-only ones are put back when the condition ends.
+ * Runs on every global layout of Twitch's activities and checks again before
+ * that layout is drawn, after Twitch's transition callbacks. Only views that
+ * are VISIBLE are touched; the landscape-only ones are put back when the condition ends.
  */
 public final class UiHider {
 
@@ -157,12 +157,24 @@ public final class UiHider {
             return;
         }
         final View decor = activity.getWindow().getDecorView();
+        final ViewTreeObserver.OnPreDrawListener checkBeforeDraw = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                decor.getViewTreeObserver().removeOnPreDrawListener(this);
+                safeApply(activity, decor);
+                return true;
+            }
+        };
         decor.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 long t0 = UiStallLog.start();
                 safeApply(activity, decor);
                 UiStallLog.end("UiHider", t0);
+                // Transitions can restore visibility in pre-draw. Run after their already-registered callbacks.
+                ViewTreeObserver observer = decor.getViewTreeObserver();
+                observer.removeOnPreDrawListener(checkBeforeDraw);
+                observer.addOnPreDrawListener(checkBeforeDraw);
             }
         });
         // Focus moving into / out of the chat input doesn't always relayout.
