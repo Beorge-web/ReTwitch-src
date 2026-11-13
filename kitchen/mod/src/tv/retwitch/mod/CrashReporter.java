@@ -123,7 +123,9 @@ public final class CrashReporter {
                 return;
             }
             String scope = tag != null ? tag : TAG;
-            String identifier = where != null ? scope + ": " + where : scope;
+            // The group name drops URLs and long numbers (timings, ids): each URL was its own group. The message keeps them.
+            String identifier = where != null
+                    ? scope + ": " + where.replaceAll("https?://\\S+", "<url>").replaceAll("\\d{2,}", "N") : scope;
             AppMetrica.reportError(identifier, where, t);
         } catch (Throwable ignored) {
             // Crash reporting must never itself take down the app.

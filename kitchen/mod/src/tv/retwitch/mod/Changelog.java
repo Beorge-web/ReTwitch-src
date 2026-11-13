@@ -13,6 +13,9 @@ import android.text.TextUtils;
 public final class Changelog {
 
     private static final String[][] ENTRIES = {
+            {"0.5.29-beta",
+                    "Отчёты о сбоях больше не отправляют обычные обрывы сети",
+                    "Crash reports no longer send ordinary network drops"},
             {"0.5.28-beta",
                     "«Чат выключен» для слабых телефонов: чат не рисуется, пока не нажмёте «Показать» или кнопку чата на плеере\n"
                             + "Французский перевод (спасибо GoatKou)\n"

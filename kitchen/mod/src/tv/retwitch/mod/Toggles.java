@@ -493,7 +493,7 @@ public final class Toggles {
             .about("Полоса с заголовком над чатом видео",
                     "The title bar above a video's chat")
             .look(SettingsPreview.HEADER, SettingsPreview.T_REPLAY)
-            .asNew("0.5.28-beta");
+            .asNew("0.5.29-beta");
 
     public static final Toggle HIDE_TAB_ACTIVITY = new Toggle("hide_tab_activity", "Вкладка «Активность»", "Activity tab", false)
             .look(SettingsPreview.HOME, SettingsPreview.H_ACTIVITY);
@@ -985,7 +985,7 @@ public final class Toggles {
                             + "подключён: баллы, упоминания и мод-логи работают. Не действует в вертикальном виде",
                     "To turn the chat on until the app restarts: Show in its place or the chat button on the player. The chat "
                             + "stays connected: points, mentions and mod logs work. Vertical view isn't covered")
-            .asNew("0.5.28-beta");
+            .asNew("0.5.29-beta");
     public static final Toggle CHAT_PINCH_TEXT = new Toggle("chat_pinch_text", "Размер щипком", "Pinch to resize", false)
             .about("Двумя пальцами прямо в чате, как фото",
                     "With two fingers right in the chat, like a photo")

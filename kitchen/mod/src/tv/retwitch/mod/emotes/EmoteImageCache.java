@@ -254,7 +254,9 @@ final class EmoteImageCache {
             return decoded;
         } catch (Throwable t) {
             Log.w(TAG, "large image load failed: " + finalUrl, t);
-            CrashReporter.report(TAG, "large image load failed: " + finalUrl, t);
+            if (!(t instanceof IOException)) { // timeouts and refused hosts are the network, not a bug
+                CrashReporter.report(TAG, "large image load failed: " + finalUrl, t);
+            }
             return null;
         }
     }
@@ -311,7 +313,9 @@ final class EmoteImageCache {
             return drawable;
         } catch (Throwable t) {
             Log.w(TAG, "image load failed (" + (System.currentTimeMillis() - start) + "ms): " + finalUrl, t);
-            CrashReporter.report(TAG, "image load failed (" + (System.currentTimeMillis() - start) + "ms): " + finalUrl, t);
+            if (!(t instanceof IOException)) { // timeouts and refused hosts are the network, not a bug
+                CrashReporter.report(TAG, "image load failed (" + (System.currentTimeMillis() - start) + "ms): " + finalUrl, t);
+            }
             return null;
         }
     }

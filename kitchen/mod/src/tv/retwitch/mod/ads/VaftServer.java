@@ -268,7 +268,9 @@ public final class VaftServer {
             respond(client, 200, "application/vnd.apple.mpegurl", out, head);
         } catch (Throwable t) {
             Log.w(TAG, "request failed", t);
-            CrashReporter.report(TAG, "request failed", t);
+            if (!(t instanceof IOException)) { // the network (player gone, timeouts, upstream down) isn't a bug: 82% of all reports
+                CrashReporter.report(TAG, "request failed", t);
+            }
             try {
                 respond(client, 502, "text/plain", "upstream error", head);
             } catch (Throwable ignored) {
