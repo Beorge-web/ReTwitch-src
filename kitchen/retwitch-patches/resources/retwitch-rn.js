@@ -751,10 +751,17 @@
                 return React.createElement(original, props);
             };
         },
-        // Recaps and clips sit in one of these: an empty one would keep its slot in the page's gap.
+        // Recaps and clips sit in one of these: an empty one would keep its slot in the page's gap. Its children is a
+        // render function (children(trackingEnabled)) that only builds the shelf's element, no hooks.
         ChannelProfileTrackedShelf: function (original) {
             return function (props) {
-                var child = props.children, test = child && child.type && child.type.retwitchHidden;
+                var child = props.children;
+                try {
+                    if (typeof child === 'function') child = child(false);
+                } catch (e) {
+                    child = null;
+                }
+                var test = child && child.type && child.type.retwitchHidden;
                 if (test && test(child.props || {})) return null;
                 return React.createElement(original, props);
             };

@@ -455,8 +455,8 @@ public final class Toggles {
             .asNew("0.5.27-beta");
     public static final Toggle HIDE_PROFILE_FEATURED_CLIPS = new Toggle("hide_profile_featured_clips", "Избранные клипы", "Featured clips", true)
             .about("Полка избранных клипов на главной вкладке канала", "The featured clips shelf on the channel's Home tab")
-            .compare("Фиолетовая карточка «Избранные клипы» и клипы рядом", "Полки нет",
-                    "A purple Featured Clips card with clips next to it", "No shelf")
+            .compare("Карточка «Избранные клипы» в цвете канала и клипы рядом", "Полки нет",
+                    "A Featured Clips card in the channel's colour with clips next to it", "No shelf")
             .note("Клипы, сделанные вами на своём канале, остаются", "Clips you made on your own channel stay")
             .asNew("0.5.27-beta");
     public static final Toggle HIDE_PROFILE_CATEGORIES = new Toggle("hide_profile_categories", "Эфиры по категориям", "Streams by category", true)
@@ -488,6 +488,12 @@ public final class Toggles {
             .about("Значок в шапке и строка с топом",
                     "The header icon and the top supporters row")
             .look(SettingsPreview.HEADER, SettingsPreview.T_LEADERBOARD);
+    /** A video's chat (chomments_view): the bar and the line above it (UiHider), portrait and full screen. */
+    public static final Toggle HIDE_VOD_CHAT_HEADER = new Toggle("hide_vod_chat_header", "«Повтор чата»", "\"Chat Replay\"", false)
+            .about("Полоса с заголовком над чатом видео",
+                    "The title bar above a video's chat")
+            .look(SettingsPreview.HEADER, SettingsPreview.T_REPLAY)
+            .asNew("0.5.28-beta");
 
     public static final Toggle HIDE_TAB_ACTIVITY = new Toggle("hide_tab_activity", "Вкладка «Активность»", "Activity tab", false)
             .look(SettingsPreview.HOME, SettingsPreview.H_ACTIVITY);
@@ -623,7 +629,11 @@ public final class Toggles {
     public static final Toggle HIDE_CHAT_MODE_POPUP = new Toggle("hide_chat_mode_popup", "Подсказка о режиме чата", "Chat mode popup", false)
             .about("«Режим чата: колонка» при смене режима в полном экране",
                     "\"Chat mode: column\" when switching in fullscreen")
-            .look(SettingsPreview.PLAYER, SettingsPreview.P_MODE_POPUP);
+            .look(SettingsPreview.PLAYER, SettingsPreview.P_MODE_POPUP)
+            .note("И разовое окно Twitch «Chat Overlay» о новом виде чата в полном экране: с ним Twitch сам включает "
+                            + "оверлей чата",
+                    "And Twitch's one-time Chat Overlay window about the new chat in full screen: with it Twitch turns "
+                            + "the chat overlay on by itself");
     /** The points button beside the chat input, per orientation (UiHider); auto-claim works off the state, not the button. */
     public static final Toggle HIDE_POINTS_PORTRAIT = new Toggle("hide_points_portrait", "Баллы в портрете", "Points in portrait", false)
             .about("Кнопка баллов канала у поля ввода",

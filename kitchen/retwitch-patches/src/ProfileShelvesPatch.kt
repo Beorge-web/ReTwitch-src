@@ -23,6 +23,22 @@ private val profileShelvesFingerprint = fingerprint {
     strings(CATEGORY_SHELF_KEY)
 }
 
+private const val FEATURED_CLIPS = "featured_clips"
+
+/**
+ * The native Home tab's clip shelf (31.9.0 `aiv.a(builder, index, shelf)`): one builder for featured clips and clips by
+ * the user, picked by the shelf's ()Z flag, tracked as "featured_clips" / "clips_by_user". It doesn't take a shelf key.
+ * `s8h.e/f(String, Z)` (analytics) carry the same two strings.
+ */
+private val profileClipShelfFingerprint = fingerprint {
+    returns("V")
+    strings(FEATURED_CLIPS, "clips_by_user")
+    custom { method, _ ->
+        !AccessFlags.STATIC.isSet(method.accessFlags) && method.parameterTypes.size == 3 &&
+            method.parameterTypes[1].toString() == "I"
+    }
+}
+
 /**
  * Shelves of the native channel page's Home tab. Each goes through one builder call with its key (31.9.0
  * `jq50.u(key, items, ...)`; the static `jq50.v` fills its defaults and calls it): "streamRecapsShelfKey",
@@ -71,6 +87,39 @@ val retwitchProfileShelvesPatch = bytecodePatch(
             println("[ReTwitch] channel page shelves: ${builder.definingClass}->${builder.name}")
         } catch (e: Exception) {
             println("[ReTwitch] channel page shelves skipped: $e")
+        }
+        // Featured clips: at the builder's entry the shelf's flag (the call that picks "featured_clips") goes to
+        // UiHider.profileClipShelfHidden. The method has 47 locals, so the shelf parameter needs a /range call.
+        try {
+            val method = profileClipShelfFingerprint.method
+            val code = method.instructions.toList()
+            val tag = code.indexOfFirst {
+                it.opcode == Opcode.CONST_STRING &&
+                    ((it as ReferenceInstruction).reference as StringReference).string == FEATURED_CLIPS
+            }
+            val shelfType = method.parameterTypes[2].toString()
+            val flagCall = (tag - 1 downTo 0).first { i ->
+                val ref = (code[i] as? ReferenceInstruction)?.reference as? MethodReference
+                ref != null && ref.definingClass == shelfType && ref.returnType == "Z" && ref.parameterTypes.isEmpty()
+            }
+            val flag = (code[flagCall] as ReferenceInstruction).reference as MethodReference
+            val invoke = if (code[flagCall].opcode == Opcode.INVOKE_INTERFACE ||
+                code[flagCall].opcode == Opcode.INVOKE_INTERFACE_RANGE) "invoke-interface/range" else "invoke-virtual/range"
+            method.addInstructionsWithLabels(
+                0,
+                """
+                    $invoke {p3 .. p3}, $shelfType->${flag.name}()Z
+                    move-result v0
+                    invoke-static {v0}, Ltv/retwitch/mod/UiHider;->profileClipShelfHidden(Z)Z
+                    move-result v0
+                    if-eqz v0, :keep
+                    return-void
+                """.trimIndent(),
+                ExternalLabel("keep", method.getInstruction(0)),
+            )
+            println("[ReTwitch] channel page featured clips: ${method.definingClass}->${method.name}")
+        } catch (e: Exception) {
+            println("[ReTwitch] channel page featured clips skipped: $e")
         }
         // Native or React Native channel page. The flag object (31.9.0 `lfg`) holds the key; its gate (`t260`, built
         // on `t0`, which evaluates outside the shared evaluator ExperimentHook overrides) answers in a ()Z method:

@@ -54,7 +54,7 @@ final class SettingsPreview extends View {
             C_DELETED_BG = 1L << 36, C_NEW_COUNT = 1L << 37;
 
     static final long T_TITLE = 1L, T_BUTTONS = 1L << 1, T_GIFT = 1L << 2, T_EXTENSIONS = 1L << 3,
-            T_LEADERBOARD = 1L << 4;
+            T_LEADERBOARD = 1L << 4, T_REPLAY = 1L << 5;
 
     static final long B_HYPE = 1L, B_POLL = 1L << 1, B_RAID = 1L << 2, B_SHOUTOUT = 1L << 3, B_DROPS = 1L << 4,
             B_GIFTS = 1L << 5, B_SHARED = 1L << 6, B_PAID_PIN = 1L << 7, B_PIN = 1L << 8;
@@ -1178,6 +1178,16 @@ final class SettingsPreview extends View {
         box(0, 0, 340, 400, 0, colors.bg);
         y = 0;
         float baseline = 28;
+        if (focus == T_REPLAY) {
+            // A video's chat: its own header bar instead of the live one.
+            if (hides(T_REPLAY, 0, 0, 340, 44, 0)) {
+                label(t("Повтор чата", "Chat Replay"), 14, baseline, 15, colors.fg, true);
+                box(0, 44, 340, 1, 0, colors.line);
+                y = 45;
+            }
+            say(1, t("всем привет", "hey everyone"));
+            return;
+        }
         boolean any = !on(T_TITLE) || !on(T_BUTTONS) || !on(T_EXTENSIONS) || !on(T_LEADERBOARD) || focus != 0;
         if (any) {
             if (hides(T_TITLE, 12, 10, 34, 24, 5)) {

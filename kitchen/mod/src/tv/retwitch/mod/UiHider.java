@@ -95,6 +95,7 @@ public final class UiHider {
             // PlayerHook.attachLatencyLabels, called from the pass.
             "play_pause_container", "play_pause_fast_seek_view", "message_input",
             "fullscreen_button", "chat_mode_button", "emote_picker", "chat_header_container", "emoticon_picker",
+            "chomments_header_container",
             "seek_forward_button", "seek_rewind_button",
             "community_points_button_container", "right_side_community_points_button_container",
     };
@@ -114,6 +115,8 @@ public final class UiHider {
     private static boolean emotePortraitTouched;
     private static boolean unfollowTouched;
     private static boolean pointsTouched;
+    private static boolean replayHeaderTouched;
+    private static boolean overlayCalloutMarked;
     private static String unfollowLabel;
 
     private UiHider() {
@@ -488,6 +491,11 @@ public final class UiHider {
                 || "streamerShelfKey".equals(key) && Toggles.on(Toggles.HIDE_PROFILE_STREAMERS);
     }
 
+    /** ProfileShelvesPatch: the native Home tab's clip shelf builder; featured ones go, "clips by user" stay. */
+    public static boolean profileClipShelfHidden(boolean featured) {
+        return featured && Toggles.on(Toggles.HIDE_PROFILE_FEATURED_CLIPS);
+    }
+
     /** DrawerSortPatch: the tablet's followed channels column keeps its own sort while SEPARATE_DRAWER_SORT is on. */
     public static String drawerSortKey(String key) {
         return Toggles.on(Toggles.SEPARATE_DRAWER_SORT) ? "retwitch_drawer_sort_method" : key;
@@ -662,6 +670,13 @@ public final class UiHider {
                 hideWhile(modePopup, bar);
             }
         }
+        // Twitch's one-time "Chat Overlay" callout (one_chat_callout) shows, and switches the landscape chat to the
+        // overlay, while this flag in its theatre prefs is false; any of its buttons sets it. Off again, it stays set.
+        if (modePopup && !overlayCalloutMarked) {
+            overlayCalloutMarked = true;
+            activity.getSharedPreferences("video_quality", Context.MODE_PRIVATE).edit()
+                    .putBoolean("pref_onechat_education_dialog_shown", true).apply();
+        }
         // Header: its row's elements one by one; an emptied row takes the whole header (and the
         // 1dp line under it) away. Judged by visibility flags, not size: a GONE header isn't laid
         // out, so sizes would keep it hidden after Twitch shows its buttons again.
@@ -672,6 +687,20 @@ public final class UiHider {
             hideWhile(buttons, find(activity, box, "chat_header_buttons_container"));
             View row = find(activity, box, "header_container");
             hideWhile(header || row != null && !hasContent(row), box);
+        }
+        // A video's chat (chomments_view): the "Chat Replay" bar and the 1dp line above it; Twitch never touches either.
+        boolean replayHeader = Toggles.on(Toggles.HIDE_VOD_CHAT_HEADER);
+        if (replayHeader || replayHeaderTouched) {
+            replayHeaderTouched = replayHeader;
+            for (View bar : findAll(activity, decor, "chomments_header_container")) {
+                hideWhile(replayHeader, bar);
+                ViewGroup column = bar.getParent() instanceof ViewGroup ? (ViewGroup) bar.getParent() : null;
+                int index = column != null ? column.indexOfChild(bar) : -1;
+                View line = index > 0 ? column.getChildAt(index - 1) : null;
+                if (line != null && line.getClass() == View.class) {
+                    hideWhile(replayHeader, line);
+                }
+            }
         }
         // Tree walks only while hiding, plus one pass after, to put the views back.
         if (input || sideChatTouched) {

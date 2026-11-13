@@ -20,8 +20,8 @@ body:
 
         **Logs.** Twitch settings > ReTwitch > Diagnostics > Logs for reports. Turn on the one for your problem (ad blocking log for freezes and ads, UI stall log for lag, bans and deletions log for missing messages), reproduce the problem and attach `ReTwitch-*.txt` from Downloads.
 
-        **Настройки.** ReTwitch > «Резервная копия» > «Сохранить в файл» > `retwitch-settings-ДАТА.json`. С ним проще повторить баг: в файле только настройки мода и флаги экспериментов Twitch.
-        **Settings.** ReTwitch > Backup > Save to a file > `retwitch-settings-DATE.json`: the mod's settings and Twitch's experiment flags only.
+        **Настройки - обязательно.** ReTwitch > «Резервная копия» > «Сохранить в файл» > `retwitch-settings-ДАТА.json`, приложите его в поле «Экспорт настроек». Без него заявку не разобрать: баг часто зависит от того, что включено. В файле только настройки мода и флаги экспериментов Twitch.
+        **Settings - required.** ReTwitch > Backup > Save to a file > `retwitch-settings-DATE.json`, attach it in the "Settings export" field. Without it we can't look into the issue: a bug often depends on what's turned on. The file has the mod's settings and Twitch's experiment flags only.
 
         Если приложение вылетает, отчёт уходит сам: напишите, во сколько это было. / If the app crashes, the report is sent by itself: tell us when it happened.
   - type: input
@@ -57,6 +57,13 @@ body:
     validations:
       required: true
   - type: textarea
+    id: settings
+    attributes:
+      label: "Экспорт настроек (обязательно) / Settings export (required)"
+      description: "Перетащите сюда `retwitch-settings-ДАТА.json` из «Резервной копии» / Drag `retwitch-settings-DATE.json` from Backup here"
+    validations:
+      required: true
+  - type: textarea
     id: files
     attributes:
       label: "Запись экрана, скриншоты, логи / Recording, screenshots, logs"
@@ -67,5 +74,7 @@ body:
       label: "Проверки / Checks"
       options:
         - label: "Такой заявки ещё нет / There's no issue about it yet"
+          required: true
+        - label: "Экспорт настроек приложен / The settings export is attached"
           required: true
         - label: "Повторяется на последней версии мода / Happens on the latest version"

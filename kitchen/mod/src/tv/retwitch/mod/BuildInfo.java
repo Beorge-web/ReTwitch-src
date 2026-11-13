@@ -26,7 +26,7 @@ package tv.retwitch.mod;
 public final class BuildInfo {
 
     /** Human-readable mod version. The single place to bump on release. */
-    public static final String VERSION_NAME = "0.5.27-beta";
+    public static final String VERSION_NAME = "0.5.28-beta";
 
     private BuildInfo() {
     }

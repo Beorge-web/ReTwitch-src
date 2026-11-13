@@ -57,6 +57,12 @@ final class ModUpdate {
      * the RTE emote proxy ({@link tv.retwitch.mod.emotes.EmoteProxy#proxied}, direct when that proxy is off).
      */
     private static volatile boolean viaProxy;
+    /**
+     * The APK's last source, once the proxy fails too: the public repo's GitHub release of that version
+     * ({@code export_public.py --release} uploads the same file publish.py does, so latest.json's hash still checks it).
+     */
+    private static final String GITHUB_RELEASES = "https://github.com/reyohoho/ReTwitch-src/releases/download/v";
+    private static volatile boolean viaGithub;
 
     private static final class Release {
         String version;
@@ -181,9 +187,22 @@ final class ModUpdate {
         }
     }
 
+    /** The APK: S3 or the proxy ({@link #open}), then GitHub ({@link #viaGithub}). */
+    private static HttpURLConnection openApk(Release release, long from) throws IOException {
+        if (!viaGithub) {
+            try {
+                return open(BASE_URL + release.apk, from);
+            } catch (IOException e) {
+                Log.w(TAG, "S3 and the proxy failed, going to GitHub", e);
+                viaGithub = true;
+            }
+        }
+        return connect(GITHUB_RELEASES + release.version + "/" + release.apk, from);
+    }
+
     /**
      * From byte {@code from} on: a later part must come as one (206), or whole (200, the proxy ignores Range: see
-     * {@link #body}).
+     * {@link #body}). GitHub answers with a redirect to its file host, which HttpURLConnection follows.
      */
     private static HttpURLConnection connect(String url, long from) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
@@ -326,7 +345,7 @@ final class ModUpdate {
         try (OutputStream out = new FileOutputStream(file)) {
             for (int connections = 1; total < release.size; connections++) {
                 try {
-                    HttpURLConnection connection = open(BASE_URL + release.apk, total);
+                    HttpURLConnection connection = openApk(release, total);
                     try (InputStream in = body(connection, total)) {
                         byte[] buffer = new byte[64 * 1024];
                         for (int n; (n = in.read(buffer)) > 0; ) {
@@ -348,7 +367,7 @@ final class ModUpdate {
                 } catch (IOException e) {
                     if (connections >= CONNECTIONS || cancelled[0]) {
                         throw new IOException("stopped at " + total + " of " + release.size + " after " + connections
-                                + " connections" + (viaProxy ? " via the proxy" : ""), e);
+                                + " connections" + (viaGithub ? " from GitHub" : viaProxy ? " via the proxy" : ""), e);
                     }
                     Log.w(TAG, "download cut at " + total + ", going on", e);
                     try {

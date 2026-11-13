@@ -13,6 +13,21 @@ import android.text.TextUtils;
 public final class Changelog {
 
     private static final String[][] ENTRIES = {
+            {"0.5.28-beta",
+                    "«Чат выключен» для слабых телефонов: чат не рисуется, пока не нажмёте «Показать» или кнопку чата на плеере\n"
+                            + "Французский перевод (спасибо GoatKou)\n"
+                            + "«Повтор чата»: полосу с заголовком над чатом записи можно скрыть\n"
+                            + "«Подсказка о режиме чата» убирает и разовое окно Twitch «Chat Overlay», после которого Twitch сам включал чат поверх видео\n"
+                            + "Избранные клипы теперь скрываются и на обычной странице канала, а на новой не остаётся пустого места\n"
+                            + "Обновление мода скачивается с GitHub, если хранилище и прокси недоступны\n"
+                            + "Плитка GitHub в настройках больше не выглядит отключённой",
+                    "\"Chat off\" for slow phones: the chat isn't drawn until you tap \"Show\" or the chat button on the player\n"
+                            + "French translation (thanks to GoatKou)\n"
+                            + "\"Chat Replay\": the title bar above a VOD's chat can be hidden\n"
+                            + "\"Chat mode popup\" also removes Twitch's one-time Chat Overlay window, after which Twitch turned the chat over the video on by itself\n"
+                            + "Featured clips are now hidden on the classic channel page too, and the new one keeps no empty space\n"
+                            + "The mod's update downloads from GitHub when the storage and the proxy are down\n"
+                            + "The GitHub tile in settings no longer looks disabled"},
             {"0.5.27-beta",
                     "«Идеи и баги» переехали на GitHub: строка в настройках открывает Issues, а форма бага подсказывает, какой лог приложить\n"
                             + "Сбор на Boosty теперь сверху настроек мода\n"

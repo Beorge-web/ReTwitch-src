@@ -827,6 +827,8 @@ public final class SettingsHook {
                 Strings.chatHeaderModes(), ChatHeaderSetting.choice(), false, i -> ChatHeaderSetting.setChoice(c, i));
         s.section(t("Скрыть в шапке", "Hide in the header"));
         s.toggles(Toggles.UI_CHAT_HEADER);
+        s.section(t("Чат видео", "Video chat"));
+        s.toggle(Toggles.HIDE_VOD_CHAT_HEADER);
     }
 
     private static void uiBannersPage(SettingsScreen s) {
