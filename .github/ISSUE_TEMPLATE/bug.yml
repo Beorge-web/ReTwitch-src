@@ -1,0 +1,71 @@
+name: "Баг / Bug"
+description: "Что-то работает не так / Something doesn't work right"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Один баг - одна заявка. Сначала поищите похожие в Issues: если уже есть, поставьте 👍 и допишите своё там.
+        One bug per issue. Search first: if it's there, add 👍 and your details to it.
+
+        **Файлы.** Перетащите в любое поле ниже или вставьте из буфера: скриншоты, запись экрана, логи (`.txt`), экспорт настроек (`.json`).
+        **Files.** Drag them into any field below or paste them: screenshots, a screen recording, logs (`.txt`), the settings export (`.json`).
+
+        **Логи.** Настройки Twitch > ReTwitch > «Диагностика» > «Логи для отчётов». Включите лог под вашу проблему:
+        - фризы, зависания стрима, реклама - «Лог блокировки рекламы»;
+        - тормоза интерфейса - «Лог подвисаний»;
+        - пропавшие или удалённые сообщения - «Лог банов и удалений».
+
+        Повторите проблему, затем приложите файл `ReTwitch-*.txt` из папки «Загрузки» (Download). Токенов и паролей в логах нет. Лог потом можно выключить.
+
+        **Logs.** Twitch settings > ReTwitch > Diagnostics > Logs for reports. Turn on the one for your problem (ad blocking log for freezes and ads, UI stall log for lag, bans and deletions log for missing messages), reproduce the problem and attach `ReTwitch-*.txt` from Downloads.
+
+        **Настройки.** ReTwitch > «Резервная копия» > «Сохранить в файл» > `retwitch-settings-ДАТА.json`. С ним проще повторить баг: в файле только настройки мода и флаги экспериментов Twitch.
+        **Settings.** ReTwitch > Backup > Save to a file > `retwitch-settings-DATE.json`: the mod's settings and Twitch's experiment flags only.
+
+        Если приложение вылетает, отчёт уходит сам: напишите, во сколько это было. / If the app crashes, the report is sent by itself: tell us when it happened.
+  - type: input
+    id: version
+    attributes:
+      label: "Версия мода / Mod version"
+      description: "ReTwitch > «О моде» / About the mod"
+      placeholder: "0.5.27-beta"
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: "Телефон и Android / Device and Android"
+      placeholder: "Pixel 7, Android 16"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: "Что случилось / What happened"
+      description: "И что должно было быть вместо этого / and what you expected instead"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Как повторить / Steps to reproduce"
+      placeholder: |
+        1. Открыть канал ... / Open a channel ...
+        2. Повернуть в полный экран / Go fullscreen
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: "Запись экрана, скриншоты, логи / Recording, screenshots, logs"
+      description: "Перетащите файлы сюда / Drag the files here"
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Проверки / Checks"
+      options:
+        - label: "Такой заявки ещё нет / There's no issue about it yet"
+          required: true
+        - label: "Повторяется на последней версии мода / Happens on the latest version"

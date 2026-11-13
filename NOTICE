@@ -1,0 +1,83 @@
+ReTwitch
+========
+
+An unofficial modification of the Twitch Android app. Not affiliated with or
+endorsed by Twitch. Copyright (c) 2026 ReYohoho and contributors.
+
+ReTwitch is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version. The full text is in LICENSE. The patch bundle
+(kitchen/retwitch-patches) links against and redistributes GPL-3.0-or-later code
+(see kitchen/retwitch-patches/src/vendor/README.md).
+
+
+ReTwitch additional terms (GPLv3 Section 7)
+-------------------------------------------
+
+7c: Modified versions must be marked in reasonable ways as different from the
+original ReTwitch, so as not to cause confusion regarding their origin.
+
+7e: This License does not grant any rights under trademark law to use the names
+"ReTwitch" or "ReYohoho". Modified versions must not be distributed under these
+names.
+
+
+Morphe NOTICE
+-------------
+
+Parts of this software come from the Morphe software project
+(https://github.com/MorpheApp) and are provided "AS IS". Any express or implied
+warranties, including the implied warranties of merchantability and fitness for
+a particular purpose, are disclaimed.
+
+GPLv3 Section 7c: Prohibiting Misrepresentation of Origin
+
+You are prohibited from misrepresenting the origin of the Program, and modified
+versions of the Program must be identified and marked in reasonable ways as
+different from the original version so as not to cause confusion regarding
+their origin.
+
+GPLv3 Section 7e: Declining Grant of Trademark Rights
+
+This License does not grant any rights or permission under trademark law to use
+the name "Morphe" or any of the Program's trade names, trademarks, service
+marks, or logos.
+
+ReTwitch only names Morphe descriptively: it is built with Morphe and is not a
+Morphe product.
+
+
+Vendored and adapted code
+-------------------------
+
+- kitchen/retwitch-patches/src/vendor: copied verbatim from
+  MorpheApp/morphe-patches-library, GPL-3.0. Upstream headers are retained.
+- Promotions and display ad patches: adapted from ryykitty/twitch-patched,
+  GPL-3.0. That project in turn credits bakwudo/uyu (GPL-3.0),
+  arandomhooman/hoomans-morphe-patches (GPL-3.0) and scamorza/TwitchAdBlock (MIT).
+- Sleep timer, player reload and VOD chapters: adapted from NyanArchive/PurpleTV,
+  Apache-2.0, Copyright 2022 TwitchMod.
+- Other clients' badges and settings backup: adapted from
+  alienware377/PurpleTV-ReVive, Apache-2.0, Copyright 2022 TwitchMod.
+- Stream ad swapping (ads/SsaiSwapEngine and the playlist handling around it): a
+  Java port of VAFT from pixeltris/TwitchAdSolutions and ryanbr/TwitchAdSolutions,
+  MIT, Copyright (c) 2020-present TwitchAdSolutions Contributors.
+- Sub-only VODs (ads/SubVods): adapted from besuper/TwitchNoSub, Apache-2.0.
+- Proxy request format: the TTV LOL convention from younesaassila/ttv-lol-pro,
+  GPL-3.0.
+
+Studied for their approach: sabopura/sabopura-morphe-patches,
+jordanwoodson/lurk-morphe-patches, Overhypedcat/overhypedcat-twitch-patches
+(all GPL-3.0). P1sec/hermes-dec (AGPL-3.0) is a local research tool only and is
+not part of the mod.
+
+
+Libraries in the app
+--------------------
+
+- OkHttp, Okio, Kotlin standard library: Apache-2.0.
+- AppMetrica SDK: MIT, Copyright (c) 2023 YANDEX LLC.
+
+The full licence texts are in the app under "About" and in
+kitchen/mod/src/tv/retwitch/mod/LicenseTexts.java.

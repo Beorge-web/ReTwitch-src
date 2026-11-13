@@ -1,0 +1,25 @@
+name: "Идея / Idea"
+description: "Новая функция или улучшение / A new feature or an improvement"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Одна идея - одна заявка. Сначала поищите похожие: если такая уже есть, поставьте ей 👍, так видно, что нужнее.
+        One idea per issue. Search first: if it's there, give it a 👍, that's how we see what matters most.
+  - type: textarea
+    id: idea
+    attributes:
+      label: "Что хочется / What you'd like"
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: "Зачем / Why"
+      description: "Какую проблему решит, когда пригодится / what it solves, when you'd use it"
+  - type: textarea
+    id: look
+    attributes:
+      label: "Как может выглядеть / How it could look"
+      description: "Скриншоты, наброски, как сделано в другом приложении / screenshots, sketches, how another app does it"

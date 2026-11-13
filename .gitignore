@@ -1,0 +1,17 @@
+# Fetched by `python3 -m kitchen.deps`
+kitchen/bin/
+kitchen/libs/
+# Build output
+kitchen/work/
+kitchen/mod/out/
+kitchen/retwitch-patches/out/
+kitchen/retwitch-patches/*.jar
+kitchen/retwitch-patches/resources/retwitch-extension.dex
+# Your signing key: keep it, never commit it
+kitchen/keystore/
+*.apk
+*.apks
+*.xapk
+*.apkm
+__pycache__/
+*.pyc

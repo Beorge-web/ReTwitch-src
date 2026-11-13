@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "Новости в Telegram / News on Telegram"
+    url: https://t.me/reyohoho_twitch_ext
+    about: "Релизы и объявления. Баги и идеи - здесь, в Issues. / Releases and news; bugs and ideas go here, to Issues."
