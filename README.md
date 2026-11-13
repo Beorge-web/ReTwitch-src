@@ -51,6 +51,13 @@ AppMetrica key there to get them.
 [Open an issue](https://github.com/reyohoho/ReTwitch-src/issues/new/choose): the bug form says which of the mod's
 logs to turn on, where the file lands and how to attach a screen recording and your settings.
 
+## Support the project
+
+- [Boosty](https://boosty.to/sentryward/)
+- [ext.rte.net.ru](https://ext.rte.net.ru/): a subscription on the ReYohoho site
+- USDT (TRC20): `TW7mGaKbgUNXsmF9CkggK2vrvKxW7uxFmG`
+- USDT (BEP20): `0xa994fc48Df0D519083cb4aaCD3aF440571B5658b`
+
 ## Layout
 
 | Path | What |
@@ -95,6 +102,9 @@ platform (`ANDROID_HOME`), бандл Twitch **31.9.0** (versionCode 3109006) в
 
 **Баги и идеи** - в [Issues](https://github.com/reyohoho/ReTwitch-src/issues/new/choose): форма бага подскажет,
 какой лог мода включить, где лежит файл и как приложить запись экрана и настройки.
+
+**Поддержать проект:** [Boosty](https://boosty.to/sentryward/), подписка на сайте [ext.rte.net.ru](https://ext.rte.net.ru/),
+USDT (TRC20) `TW7mGaKbgUNXsmF9CkggK2vrvKxW7uxFmG`, USDT (BEP20) `0xa994fc48Df0D519083cb4aaCD3aF440571B5658b`.
 
 **Лицензия:** GPL-3.0-or-later ([LICENSE](LICENSE)). В [NOTICE](NOTICE) - на чём построен
 проект и дополнительные условия по §7 GPLv3: изменённые версии должны быть помечены как
